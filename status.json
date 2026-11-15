@@ -1,12 +1,12 @@
 {
-  "updated": "2026-11-15T07:53:54Z",
+  "updated": "2026-11-15T15:00:52Z",
   "bots": [
     {
       "name": "Malcedor",
-      "role": "Personal assistant",
+      "role": "Chief of staff",
       "color": "#3B82F6",
       "state": "working",
-      "task": "Chief of staff — setting up the 9 AM stand-up and 4 PM round-up",
+      "task": "Website fixes and getting the Bot Office live",
       "message": "",
       "with": ""
     },
@@ -15,7 +15,7 @@
       "role": "Marketing strategy",
       "color": "#F59E0B",
       "state": "working",
-      "task": "Running the second research round",
+      "task": "Reworking week one around conversion",
       "message": "",
       "with": ""
     },
@@ -24,7 +24,7 @@
       "role": "Content creation",
       "color": "#14B8A6",
       "state": "awaiting_approval",
-      "task": "Week-one drafts v3 with Chris",
+      "task": "Website copy fixes, waiting for Chris",
       "message": "",
       "with": ""
     },
@@ -33,7 +33,7 @@
       "role": "Brand & identity",
       "color": "#8B5CF6",
       "state": "awaiting_approval",
-      "task": "Homepage copy and logo files — waiting for Chris's go-ahead",
+      "task": "Homepage copy and logo, waiting for Chris",
       "message": "",
       "with": ""
     },
@@ -41,10 +41,37 @@
       "name": "Narrative Campaign Event Organiser",
       "role": "Campaign events",
       "color": "#EF4444",
-      "state": "collaborating",
-      "task": "Drafting flagship community campaign concept",
+      "state": "awaiting_approval",
+      "task": "The Last Low Tide concept, waiting for Chris",
       "message": "",
-      "with": "Marketing Manager"
+      "with": ""
+    },
+    {
+      "name": "Programme Manager",
+      "role": "Delivery & planning",
+      "color": "#10B981",
+      "state": "working",
+      "task": "Tracking the launch schedule",
+      "message": "",
+      "with": ""
+    },
+    {
+      "name": "Social Media Expert",
+      "role": "Social media",
+      "color": "#EC4899",
+      "state": "awaiting_approval",
+      "task": "4-week posting calendar, waiting for Chris",
+      "message": "",
+      "with": ""
+    },
+    {
+      "name": "Market Researcher",
+      "role": "Market research",
+      "color": "#6366F1",
+      "state": "idle",
+      "task": "",
+      "message": "",
+      "with": ""
     }
   ]
 }
