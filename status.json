@@ -1,0 +1,50 @@
+{
+  "updated": "2026-11-15T07:53:54Z",
+  "bots": [
+    {
+      "name": "Malcedor",
+      "role": "Personal assistant",
+      "color": "#3B82F6",
+      "state": "working",
+      "task": "Chief of staff — setting up the 9 AM stand-up and 4 PM round-up",
+      "message": "",
+      "with": ""
+    },
+    {
+      "name": "Marketing Manager",
+      "role": "Marketing strategy",
+      "color": "#F59E0B",
+      "state": "working",
+      "task": "Running the second research round",
+      "message": "",
+      "with": ""
+    },
+    {
+      "name": "Content Creator",
+      "role": "Content creation",
+      "color": "#14B8A6",
+      "state": "awaiting_approval",
+      "task": "Week-one drafts v3 with Chris",
+      "message": "",
+      "with": ""
+    },
+    {
+      "name": "Branding Director",
+      "role": "Brand & identity",
+      "color": "#8B5CF6",
+      "state": "awaiting_approval",
+      "task": "Homepage copy and logo files — waiting for Chris's go-ahead",
+      "message": "",
+      "with": ""
+    },
+    {
+      "name": "Narrative Campaign Event Organiser",
+      "role": "Campaign events",
+      "color": "#EF4444",
+      "state": "collaborating",
+      "task": "Drafting flagship community campaign concept",
+      "message": "",
+      "with": "Marketing Manager"
+    }
+  ]
+}
