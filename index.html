@@ -3,29 +3,46 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bot Office</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 10 10%27%3E%3Crect width=%2710%27 height=%2710%27 rx=%272%27 fill=%27%23facc15%27/%3E%3C/svg%3E">
+<title>War Ledger HQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Crect width=%2716%27 height=%2716%27 rx=%273%27 fill=%27%23140F26%27/%3E%3Cpath fill=%27none%27 stroke=%27%23FFFFFF%27 stroke-width=%271.2%27 d=%27M8 3.2 12.2 5.6 12.2 10.4 8 12.8 3.8 10.4 3.8 5.6Z%27/%3E%3C/svg%3E">
 <style>
-  :root { color-scheme: light; }
-  html, body { margin: 0; height: 100%; overflow: hidden; background: #dbeafe; font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif; }
+  :root {
+    --night: #140F26;
+    --ink: #2C2345;
+    --mid: #4A3473;
+    --signal: #5D3F99;
+    --paper: #F4F2F6;
+    --parchment: #C9C7D0;
+    --white: #FFFFFF;
+    color-scheme: light;
+  }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #140F26; font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif; color: #140F26; }
   canvas#c { display: block; width: 100vw; height: 100vh; }
   #hud { position: fixed; top: 14px; left: 14px; width: 360px; max-height: calc(100vh - 28px); overflow: auto;
-    background: rgba(255,255,255,.92); border-radius: 16px; box-shadow: 0 6px 24px rgba(30,41,59,.22); padding: 14px 14px 10px; color: #1f2937; backdrop-filter: blur(6px); }
-  #hud h1 { font-size: 20px; margin: 0 0 2px; letter-spacing: .3px; }
-  #hud h1 span { background: #facc15; border-radius: 6px; padding: 0 7px; margin-right: 6px; box-shadow: inset 0 -3px 0 rgba(0,0,0,.12); }
-  #hud .sub { font-size: 12px; color: #64748b; margin-bottom: 10px; }
-  .bot { display: grid; grid-template-columns: 14px 1fr auto; gap: 2px 8px; align-items: center; padding: 8px 0; border-top: 1px solid #e2e8f0; }
+    background: rgba(244,242,246,.94); border: 1px solid rgba(93,63,153,.28); border-radius: 14px;
+    box-shadow: 0 8px 28px rgba(20,15,38,.32); padding: 0 0 8px; color: #140F26; backdrop-filter: blur(8px); }
+  #hud .brand { position: sticky; top: 0; background: #140F26; color: #fff; padding: 12px 16px 11px; display: flex; align-items: baseline; justify-content: space-between; gap: 10px; z-index: 1; }
+  #hud .wordmark { font-family: Cinzel, "Times New Roman", serif; font-weight: 700; font-size: 16px; letter-spacing: .22em; margin: 0; line-height: 1.2; }
+  #hud .hq { font-family: Cinzel, "Times New Roman", serif; font-weight: 400; font-size: 11px; letter-spacing: .32em; color: #C9C7D0; }
+  #hud .sub { font-size: 12px; color: #4A3473; margin: 0; padding: 10px 16px 6px; }
+  #list { padding: 0 16px; }
+  .bot { display: grid; grid-template-columns: 14px 1fr auto; gap: 2px 8px; align-items: center; padding: 8px 0; border-top: 1px solid rgba(44,35,69,.14); }
   .dot { width: 14px; height: 14px; border-radius: 4px; box-shadow: inset 0 -3px 0 rgba(0,0,0,.18); }
-  .name { font-weight: 700; font-size: 14px; }
-  .name small { font-weight: 400; color: #64748b; font-size: 12px; margin-left: 4px; }
+  .name { font-weight: 700; font-size: 14px; color: #140F26; }
+  .name small { font-weight: 400; color: #4A3473; font-size: 12px; margin-left: 4px; }
   .badge { font-size: 11px; font-weight: 700; color: #fff; border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
-  .task { grid-column: 2 / 4; font-size: 12.5px; color: #374151; line-height: 1.3; }
-  .msg { grid-column: 2 / 4; font-size: 12px; color: #6d28d9; font-style: italic; }
-  #foot { border-top: 1px solid #e2e8f0; padding-top: 8px; font-size: 11.5px; color: #475569; line-height: 1.5; }
+  .task { grid-column: 2 / 4; font-size: 12.5px; color: #2C2345; line-height: 1.3; }
+  .msg { grid-column: 2 / 4; font-size: 12px; color: #5D3F99; font-style: italic; }
+  #foot { border-top: 1px solid rgba(44,35,69,.14); margin: 4px 16px 8px; padding-top: 8px; font-size: 11.5px; color: #2C2345; line-height: 1.5; }
   #foot .src { font-weight: 700; }
-  #legend { position: fixed; right: 14px; bottom: 14px; background: rgba(255,255,255,.88); border-radius: 12px; padding: 8px 12px; font-size: 11.5px; color: #475569; box-shadow: 0 4px 16px rgba(30,41,59,.18); line-height: 1.6; }
+  #legend { position: fixed; right: 14px; bottom: 14px; background: rgba(244,242,246,.92); border: 1px solid rgba(93,63,153,.28);
+    border-radius: 12px; padding: 8px 12px; font-size: 11.5px; color: #2C2345; box-shadow: 0 6px 20px rgba(20,15,38,.22); line-height: 1.6; }
   #legend i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
-  #err { position: fixed; bottom: 14px; left: 14px; background: #fee2e2; color: #991b1b; border-radius: 10px; padding: 8px 12px; font-size: 12px; display: none; max-width: 420px; }
+  #legend .hint { color: #4A3473; }
+  #err { position: fixed; bottom: 14px; left: 14px; background: #f3e8ee; color: #6b1c3a; border: 1px solid #c9a0ae; border-radius: 10px; padding: 8px 12px; font-size: 12px; display: none; max-width: 420px; }
 </style>
 <script type="importmap">
 { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
@@ -34,7 +51,10 @@
 <body>
 <canvas id="c"></canvas>
 <div id="hud">
-  <h1><span>Bot</span>Office</h1>
+  <div class="brand">
+    <div class="wordmark">WAR LEDGER</div>
+    <div class="hq">HQ</div>
+  </div>
   <div class="sub">Chris's Grok Bot teammates, live</div>
   <div id="list"></div>
   <div id="foot"></div>
@@ -45,19 +65,19 @@
   <i style="background:#0ea5e9"></i>in a meeting<br>
   <i style="background:#94a3b8"></i>idle (breakroom sofa)<br>
   <i style="background:#ef4444"></i>needs your approval<br>
-  <span style="color:#94a3b8">Drag to orbit · scroll to zoom · right-drag to pan</span>
+  <span class="hint">Drag to orbit · scroll to zoom · right-drag to pan</span>
 </div>
 <div id="err"></div>
 
 <script id="embedded-status" type="application/json">{
-  "updated": "2026-11-15T07:53:54Z",
+  "updated": "2026-11-15T15:00:52Z",
   "bots": [
     {
       "name": "Malcedor",
-      "role": "Personal assistant",
+      "role": "Chief of staff",
       "color": "#3B82F6",
       "state": "working",
-      "task": "Chief of staff — setting up the 9 AM stand-up and 4 PM round-up",
+      "task": "Website fixes and getting the Bot Office live",
       "message": "",
       "with": ""
     },
@@ -66,7 +86,7 @@
       "role": "Marketing strategy",
       "color": "#F59E0B",
       "state": "working",
-      "task": "Running the second research round",
+      "task": "Reworking week one around conversion",
       "message": "",
       "with": ""
     },
@@ -75,7 +95,7 @@
       "role": "Content creation",
       "color": "#14B8A6",
       "state": "awaiting_approval",
-      "task": "Week-one drafts v3 with Chris",
+      "task": "Website copy fixes, waiting for Chris",
       "message": "",
       "with": ""
     },
@@ -84,7 +104,7 @@
       "role": "Brand & identity",
       "color": "#8B5CF6",
       "state": "awaiting_approval",
-      "task": "Homepage copy and logo files — waiting for Chris's go-ahead",
+      "task": "Homepage copy and logo, waiting for Chris",
       "message": "",
       "with": ""
     },
@@ -92,10 +112,37 @@
       "name": "Narrative Campaign Event Organiser",
       "role": "Campaign events",
       "color": "#EF4444",
-      "state": "collaborating",
-      "task": "Drafting flagship community campaign concept",
+      "state": "awaiting_approval",
+      "task": "The Last Low Tide concept, waiting for Chris",
       "message": "",
-      "with": "Marketing Manager"
+      "with": ""
+    },
+    {
+      "name": "Programme Manager",
+      "role": "Delivery & planning",
+      "color": "#10B981",
+      "state": "working",
+      "task": "Tracking the launch schedule",
+      "message": "",
+      "with": ""
+    },
+    {
+      "name": "Social Media Expert",
+      "role": "Social media",
+      "color": "#EC4899",
+      "state": "awaiting_approval",
+      "task": "4-week posting calendar, waiting for Chris",
+      "message": "",
+      "with": ""
+    },
+    {
+      "name": "Market Researcher",
+      "role": "Market research",
+      "color": "#6366F1",
+      "state": "idle",
+      "task": "",
+      "message": "",
+      "with": ""
     }
   ]
 }</script>
@@ -103,6 +150,19 @@
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+try {
+  await Promise.race([
+    Promise.all([
+      document.fonts.load('700 64px Cinzel'),
+      document.fonts.load('400 28px Cinzel'),
+      document.fonts.load('700 32px "Source Sans 3"'),
+      document.fonts.load('400 30px "Source Sans 3"'),
+      document.fonts.ready,
+    ]),
+    new Promise((r) => setTimeout(r, 2500)),
+  ]);
+} catch (e) { /* fall back to system fonts */ }
 
 /* ============================================================
    Config
@@ -141,7 +201,7 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color('#cfe3ff');
+scene.background = new THREE.Color('#d5cfe0');
 
 const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
 camera.position.set(7.0, 13.0, 16.8);
@@ -167,8 +227,8 @@ window.addEventListener('resize', resize);
 resize();
 
 /* ---------- lights ---------- */
-scene.add(new THREE.HemisphereLight('#ffffff', '#b9c6dc', 1.0));
-const sun = new THREE.DirectionalLight('#fff3dc', 1.9);
+scene.add(new THREE.HemisphereLight('#f4f2f6', '#8a7aa3', 1.0));
+const sun = new THREE.DirectionalLight('#f3efe8', 1.7);
 sun.position.set(-6, 20, 14);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
@@ -177,7 +237,7 @@ sun.shadow.bias = -0.0004;
 sun.shadow.normalBias = 0.03;
 sun.shadow.radius = 4;
 scene.add(sun);
-scene.add(new THREE.AmbientLight('#ffffff', 0.15));
+scene.add(new THREE.AmbientLight('#c4b8d8', 0.22));
 
 /* ---------- helpers ---------- */
 const matCache = new Map();
@@ -234,46 +294,86 @@ function V(x, z) { return new THREE.Vector3(x, 0, z); }
 const office = new THREE.Group();
 scene.add(office);
 
-// --- floor: a Lego baseplate ---
-const FLOOR_COLOR = '#c4cfdf';
-box(ROOM.x1 - ROOM.x0 + 0.4, 0.5, ROOM.z1 - ROOM.z0 + 0.4, '#9fb0c8', (ROOM.x0 + ROOM.x1) / 2, -0.25, (ROOM.z0 + ROOM.z1) / 2, office);
-box(ROOM.x1 - ROOM.x0, 0.06, ROOM.z1 - ROOM.z0, FLOOR_COLOR, (ROOM.x0 + ROOM.x1) / 2, 0.03, (ROOM.z0 + ROOM.z1) / 2, office);
-{
-  const pts = [];
-  for (let x = ROOM.x0 + 0.5; x < ROOM.x1; x += 1) for (let z = ROOM.z0 + 0.5; z < ROOM.z1; z += 1) {
-    if (x > 5.8 && x < 11.2 && z > -5.5 && z < -2.3) continue;           // under the rug / sofa
-    if (x > 13.05 && x < 19.15 && z > -6.7 && z < 1.95) continue;        // under the meeting-room carpet
-    pts.push([x, z]);
+// --- floor: parchment stone with a campaign hex grid ---
+function strokeHexes(g, w, h, r, stroke, lineWidth) {
+  g.strokeStyle = stroke; g.lineWidth = lineWidth;
+  const xStep = r * 1.5, yStep = Math.sqrt(3) * r;
+  let col = 0;
+  for (let x = 0; x < w + r; x += xStep, col++) {
+    const yOff = (col % 2) * (yStep / 2);
+    for (let y = -yStep; y < h + r; y += yStep) {
+      const cy = y + yOff;
+      g.beginPath();
+      for (let i = 0; i < 6; i++) {
+        const a = Math.PI / 3 * i;
+        const px = x + r * Math.cos(a), py = cy + r * Math.sin(a);
+        if (i === 0) g.moveTo(px, py); else g.lineTo(px, py);
+      }
+      g.closePath(); g.stroke();
+    }
   }
-  const studs = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.2, 0.2, 0.1, 14), mat('#cdd8e8', { roughness: 0.5 }), pts.length);
-  const m4 = new THREE.Matrix4();
-  pts.forEach(([x, z], i) => { m4.setPosition(x, 0.09, z); studs.setMatrixAt(i, m4); });
-  studs.receiveShadow = true; studs.castShadow = false;
-  office.add(studs);
+}
+function fillHexes(g, w, h, r, pick) {
+  const xStep = r * 1.5, yStep = Math.sqrt(3) * r;
+  let col = 0;
+  for (let x = 0; x < w + r; x += xStep, col++) {
+    const yOff = (col % 2) * (yStep / 2);
+    let row = 0;
+    for (let y = -yStep; y < h + r; y += yStep, row++) {
+      const cy = y + yOff;
+      const fill = pick(col, row, x, cy);
+      if (!fill) continue;
+      g.beginPath();
+      for (let i = 0; i < 6; i++) {
+        const a = Math.PI / 3 * i;
+        const px = x + r * Math.cos(a), py = cy + r * Math.sin(a);
+        if (i === 0) g.moveTo(px, py); else g.lineTo(px, py);
+      }
+      g.closePath(); g.fillStyle = fill; g.fill();
+    }
+  }
+}
+const FLOOR_COLOR = '#c9c7d0';
+box(ROOM.x1 - ROOM.x0 + 0.4, 0.5, ROOM.z1 - ROOM.z0 + 0.4, '#8a8299', (ROOM.x0 + ROOM.x1) / 2, -0.25, (ROOM.z0 + ROOM.z1) / 2, office);
+{
+  // Even column count and a height that is an exact multiple of the hex row
+  // pitch, so the grid wraps without a seam.
+  const hexR = 64, hexCols = 16, hexRows = 14;
+  const hexTW = Math.round(1.5 * hexR * hexCols), hexTH = Math.round(Math.sqrt(3) * hexR * hexRows);
+  const hexTex = canvasTex(hexTW, hexTH, (g, w, h) => {
+    g.fillStyle = '#d8d3cc'; g.fillRect(0, 0, w, h);
+    strokeHexes(g, w, h, hexR, 'rgba(44,35,69,0.32)', 3);
+  });
+  hexTex.tex.wrapS = hexTex.tex.wrapT = THREE.RepeatWrapping;
+  const fw = ROOM.x1 - ROOM.x0, fd = ROOM.z1 - ROOM.z0;
+  // One texture tile covers hexCols * 1.5 * worldHexRadius; keep world hexes ~0.85 units.
+  const tileW = hexCols * 1.5 * 0.85, tileD = hexRows * Math.sqrt(3) * 0.85;
+  hexTex.tex.repeat.set(fw / tileW, fd / tileD);
+  hexTex.tex.anisotropy = 8;
+  const floorMat = new THREE.MeshStandardMaterial({ map: hexTex.tex, roughness: 0.72, metalness: 0, color: '#ffffff' });
+  const fl = new THREE.Mesh(new THREE.BoxGeometry(fw, 0.06, fd), floorMat);
+  fl.position.set((ROOM.x0 + ROOM.x1) / 2, 0.03, (ROOM.z0 + ROOM.z1) / 2);
+  fl.receiveShadow = true; fl.castShadow = false;
+  office.add(fl);
 }
 
 // --- walls (back + left cut-away room) ---
-const WALL = '#f6efe2', WALL_LOW = '#e9d9bd';
+const WALL = '#f4f2f6', WALL_LOW = '#e6dfd2';
 box(ROOM.x1 - ROOM.x0 + 0.8, 6, 0.4, WALL, (ROOM.x0 + ROOM.x1) / 2, 3, ROOM.z0 - 0.2, office);
 box(0.4, 6, ROOM.z1 - ROOM.z0 + 0.4, WALL, ROOM.x0 - 0.2, 3, (ROOM.z0 + ROOM.z1) / 2, office);
 box(ROOM.x1 - ROOM.x0, 1.1, 0.12, WALL_LOW, (ROOM.x0 + ROOM.x1) / 2, 0.55, ROOM.z0 + 0.06, office);        // wainscot
 box(0.12, 1.1, ROOM.z1 - ROOM.z0, WALL_LOW, ROOM.x0 + 0.06, 0.55, (ROOM.z0 + ROOM.z1) / 2, office);
-{ // Lego studs on top edge of walls
-  const pts = [];
-  for (let x = ROOM.x0 - 0.3; x < ROOM.x1 + 0.4; x += 0.8) pts.push([x, 6.05, ROOM.z0 - 0.2]);
-  for (let z = ROOM.z0 + 0.4; z < ROOM.z1; z += 0.8) pts.push([ROOM.x0 - 0.2, 6.05, z]);
-  const studs = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.16, 0.16, 0.12, 12), mat(WALL), pts.length);
-  const m4 = new THREE.Matrix4();
-  pts.forEach((p, i) => { m4.setPosition(...p); studs.setMatrixAt(i, m4); });
-  studs.castShadow = true; office.add(studs);
-}
+box(ROOM.x1 - ROOM.x0, 0.06, 0.14, '#4A3473', (ROOM.x0 + ROOM.x1) / 2, 1.12, ROOM.z0 + 0.07, office);     // wainscot rail
+box(0.14, 0.06, ROOM.z1 - ROOM.z0, '#4A3473', ROOM.x0 + 0.07, 1.12, (ROOM.z0 + ROOM.z1) / 2, office);
+box(ROOM.x1 - ROOM.x0 + 0.8, 0.18, 0.5, '#2C2345', (ROOM.x0 + ROOM.x1) / 2, 6.08, ROOM.z0 - 0.2, office); // cornice
+box(0.5, 0.18, ROOM.z1 - ROOM.z0 + 0.4, '#2C2345', ROOM.x0 - 0.2, 6.08, (ROOM.z0 + ROOM.z1) / 2, office);
 
 // --- windows (aligned over the desk columns) ---
 function addWindow(x, y, z, ry) {
   const g = new THREE.Group();
   box(2.5, 1.9, 0.12, '#ffffff', 0, 0, 0, g);
   const sky = canvasTex(64, 128, (c, w, h) => {
-    const gr = c.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, '#7dc4ff'); gr.addColorStop(1, '#dff1ff');
+    const gr = c.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, '#8fa0c8'); gr.addColorStop(1, '#ebe6f4');
     c.fillStyle = gr; c.fillRect(0, 0, w, h);
     c.fillStyle = 'rgba(255,255,255,.9)'; c.beginPath(); c.arc(22, 90, 10, 0, 7); c.arc(34, 86, 13, 0, 7); c.arc(46, 92, 9, 0, 7); c.fill();
   });
@@ -285,13 +385,85 @@ function addWindow(x, y, z, ry) {
 for (let i = 0; i < 4; i++) addWindow(DESK_X0 + i * DESK_DX, 3.9, ROOM.z0 + 0.06, 0);
 for (const z of [-3.5, 1]) addWindow(ROOM.x0 + 0.06, 3.9, z, Math.PI / 2);
 
+// --- campaign banners between the back-wall windows ---
+{
+  const bannerTex = canvasTex(256, 768, (g, w, h) => {
+    g.fillStyle = '#140F26'; g.fillRect(0, 0, w, h);
+    g.strokeStyle = '#5D3F99'; g.lineWidth = 14; g.strokeRect(16, 16, w - 32, h - 32);
+    g.strokeStyle = '#C9C7D0'; g.lineWidth = 3; g.strokeRect(28, 28, w - 56, h - 56);
+    g.save(); g.globalAlpha = 0.1; strokeHexes(g, w, h, 28, '#C9C7D0', 2); g.restore();
+    g.fillStyle = '#FFFFFF'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.font = '700 56px Cinzel, "Times New Roman", serif';
+    g.fillText('WAR', w / 2, h * 0.40);
+    g.fillText('LEDGER', w / 2, h * 0.50);
+    g.fillStyle = '#C9C7D0'; g.font = '400 30px Cinzel, "Times New Roman", serif';
+    g.fillText('HQ', w / 2, h * 0.60);
+  });
+  const bannerMat = new THREE.MeshStandardMaterial({ map: bannerTex.tex, roughness: 0.7, metalness: 0 });
+  for (const x of [-5.6, -1.8, 2.0]) {
+    box(0.9, 0.1, 0.1, '#2C2345', x, 5.48, ROOM.z0 + 0.1, office);
+    const b = new THREE.Mesh(new THREE.PlaneGeometry(0.85, 2.55), bannerMat);
+    b.position.set(x, 4.15, ROOM.z0 + 0.12);
+    b.castShadow = true; office.add(b);
+  }
+}
+
+// --- campaign map on the back wall (between the desks and the breakroom) ---
+function drawCampaignMap(g, w, h, { title = '', labels = true } = {}) {
+  g.fillStyle = '#e8e0d4'; g.fillRect(0, 0, w, h);
+  const vig = g.createRadialGradient(w / 2, h / 2, Math.min(w, h) * 0.2, w / 2, h / 2, Math.max(w, h) * 0.72);
+  vig.addColorStop(0, 'rgba(20,15,38,0)'); vig.addColorStop(1, 'rgba(20,15,38,0.16)');
+  g.fillStyle = vig; g.fillRect(0, 0, w, h);
+  const pal = ['#efe8dc', '#e4dccf', '#d4c8e6', '#b9a7d4', '#8d73b3', '#5D3F99', '#4A3473', '#cbbb9a', '#9aaa8a'];
+  const r = Math.min(w, h) / 14;
+  fillHexes(g, w, h, r, (col, row) => {
+    const n = Math.sin(col * 12.9898 + row * 78.233) * 43758.5453;
+    const u = n - Math.floor(n);
+    // a winding 'river' of water-coloured hexes, plus mixed territories
+    const cx = col * r * 1.5, cy = row * r * Math.sqrt(3);
+    const river = Math.abs(cy - (h * 0.55 + Math.sin(col * 0.45) * h * 0.12)) < r * 1.15;
+    if (river) return '#7a8490';
+    return pal[Math.floor(u * pal.length)];
+  });
+  strokeHexes(g, w, h, r, 'rgba(20,15,38,0.28)', 1.2);
+  // a simple coastline shadow on the lower left
+  g.fillStyle = 'rgba(122,132,144,0.35)';
+  g.beginPath(); g.moveTo(0, h * 0.78); g.quadraticCurveTo(w * 0.25, h * 0.7, w * 0.2, h); g.lineTo(0, h); g.fill();
+  if (title) {
+    g.fillStyle = '#140F26';
+    g.font = `700 ${Math.max(22, Math.round(h / 16))}px Cinzel, "Times New Roman", serif`;
+    g.textAlign = 'center'; g.textBaseline = 'top';
+    g.fillText(title, w / 2, 16);
+  }
+  if (labels) {
+    g.fillStyle = '#140F26';
+    g.font = `600 ${Math.max(14, Math.round(h / 28))}px "Source Sans 3", sans-serif`;
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    const spots = [['The Ridge', 0.28, 0.28], ['The River', 0.52, 0.54], ['Low Marsh', 0.3, 0.8], ['The Crossroads', 0.72, 0.36]];
+    spots.forEach(([lab, x, y]) => g.fillText(lab, w * x, h * y));
+  }
+  // compass
+  const cx = w - 48, cy = h - 48;
+  g.strokeStyle = '#140F26'; g.fillStyle = '#140F26'; g.lineWidth = 1.5;
+  g.beginPath(); g.moveTo(cx, cy - 22); g.lineTo(cx + 8, cy); g.lineTo(cx, cy + 22); g.lineTo(cx - 8, cy); g.closePath(); g.stroke();
+  g.font = '600 12px "Source Sans 3", sans-serif'; g.textAlign = 'center'; g.fillText('N', cx, cy - 30);
+}
+
+{
+  const map = canvasTex(1024, 720, (g, w, h) => drawCampaignMap(g, w, h, { title: 'YOUR WAR.  YOUR MAP.', labels: true }));
+  box(2.96, 2.16, 0.08, '#2C2345', 7.15, 2.4, ROOM.z0 + 0.16, office);
+  const mp = new THREE.Mesh(new THREE.PlaneGeometry(2.8, 2.0), new THREE.MeshStandardMaterial({ map: map.tex, roughness: 0.55, metalness: 0 }));
+  mp.position.set(7.15, 2.4, ROOM.z0 + 0.21);
+  office.add(mp);
+}
+
 // --- breakroom sign + clock ---
 {
   const sign = canvasTex(512, 128, (g, w, h) => {
-    g.fillStyle = '#ffffff'; rrect(g, 4, 4, w - 8, h - 8, 28); g.fill();
-    g.lineWidth = 8; g.strokeStyle = '#f59e0b'; g.stroke();
-    g.fillStyle = '#92400e'; g.font = 'bold 64px "Trebuchet MS", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
-    g.fillText('☕ BREAKROOM', w / 2, h / 2 + 4);
+    g.fillStyle = '#140F26'; rrect(g, 4, 4, w - 8, h - 8, 20); g.fill();
+    g.lineWidth = 8; g.strokeStyle = '#5D3F99'; g.stroke();
+    g.fillStyle = '#FFFFFF'; g.font = '700 58px Cinzel, "Times New Roman", serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText('BREAKROOM', w / 2, h / 2 + 4);
   });
   const p = new THREE.Mesh(new THREE.PlaneGeometry(2.8, 0.7), new THREE.MeshBasicMaterial({ map: sign.tex }));
   p.position.set(SOFA_X, 4.55, ROOM.z0 + 0.02); office.add(p);
@@ -299,11 +471,11 @@ for (const z of [-3.5, 1]) addWindow(ROOM.x0 + 0.06, 3.9, z, Math.PI / 2);
 const clockHands = {};
 {
   const g = new THREE.Group();
-  cyl(0.62, 0.62, 0.1, '#ffffff', 0, 0, 0, g, 40).rotation.x = Math.PI / 2;
-  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.62, 0.06, 10, 40), mat('#334155')); ring.position.z = 0.04; g.add(ring);
-  for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; box(0.05, i % 3 ? 0.08 : 0.14, 0.02, '#334155', Math.sin(a) * 0.5, Math.cos(a) * 0.5, 0.06, g).rotation.z = -a; }
+  cyl(0.62, 0.62, 0.1, '#f4f2f6', 0, 0, 0, g, 40).rotation.x = Math.PI / 2;
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.62, 0.06, 10, 40), mat('#2C2345')); ring.position.z = 0.04; g.add(ring);
+  for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; box(0.05, i % 3 ? 0.08 : 0.14, 0.02, '#140F26', Math.sin(a) * 0.5, Math.cos(a) * 0.5, 0.06, g).rotation.z = -a; }
   const mk = (len, w, col) => { const h = new THREE.Group(); box(w, len, 0.02, col, 0, len / 2 - 0.04, 0, h); h.position.z = 0.08; g.add(h); return h; };
-  clockHands.h = mk(0.3, 0.06, '#1f2937'); clockHands.m = mk(0.45, 0.04, '#1f2937'); clockHands.s = mk(0.5, 0.015, '#ef4444');
+  clockHands.h = mk(0.3, 0.06, '#140F26'); clockHands.m = mk(0.45, 0.04, '#2C2345'); clockHands.s = mk(0.5, 0.015, '#5D3F99');
   g.position.set(SOFA_X + 2.9, 4.4, ROOM.z0 + 0.05); office.add(g);
 }
 
@@ -414,17 +586,17 @@ class Desk {
 
 // --- breakroom ---
 {
-  const rugBase = box(5.4, 0.05, 3.2, '#b5523b', SOFA_X, 0.06, -3.9, office); rugBase.castShadow = false;
-  const rug = box(5.0, 0.06, 2.8, '#e8896f', SOFA_X, 0.07, -3.9, office); rug.castShadow = false;
-  box(4.4, 0.065, 0.15, '#fde7c4', SOFA_X, 0.075, -3.9, office).castShadow = false;
+  const rugBase = box(5.4, 0.05, 3.2, '#2C2345', SOFA_X, 0.06, -3.9, office); rugBase.castShadow = false;
+  const rug = box(5.0, 0.06, 2.8, '#4A3473', SOFA_X, 0.07, -3.9, office); rug.castShadow = false;
+  box(4.4, 0.065, 0.15, '#C9C7D0', SOFA_X, 0.075, -3.9, office).castShadow = false;
   const S = new THREE.Group(); S.position.set(SOFA_X, 0, -6.1); office.add(S);
-  const SOFA = '#4f6bd6', SOFA_D = '#3f56ad';
+  const SOFA = '#4A3473', SOFA_D = '#2C2345';
   box(4.1, 0.45, 1.4, SOFA_D, 0, 0.225, 0, S);
   box(4.1, 1.05, 0.4, SOFA, 0, 0.98, -0.5, S);
   for (const sx of [-1, 1]) box(0.4, 0.85, 1.4, SOFA, sx * 1.85, 0.62, 0.0, S);
-  for (let k = -1; k <= 1; k++) box(1.1, 0.2, 1.0, '#6f87e8', k * 1.1, 0.55, 0.12, S);
-  for (let k = -1; k <= 1; k++) box(1.0, 0.55, 0.16, '#6f87e8', k * 1.1, 0.95, -0.25, S).rotation.x = -0.15;
-  box(0.5, 0.5, 0.14, '#fbbf24', -1.45, 0.95, 0.0, S).rotation.set(0.1, 0.4, 0.2);   // throw cushion
+  for (let k = -1; k <= 1; k++) box(1.1, 0.2, 1.0, '#6b5b8c', k * 1.1, 0.55, 0.12, S);
+  for (let k = -1; k <= 1; k++) box(1.0, 0.55, 0.16, '#6b5b8c', k * 1.1, 0.95, -0.25, S).rotation.x = -0.15;
+  box(0.5, 0.5, 0.14, '#C9C7D0', -1.45, 0.95, 0.0, S).rotation.set(0.1, 0.4, 0.2);   // throw cushion
   // side tables
   for (const [x, lamp] of [[5.9, true], [11.2, false]]) {
     cyl(0.5, 0.5, 0.08, '#d9a867', x, 0.9, -6.2, office, 24);
@@ -432,7 +604,7 @@ class Desk {
     cyl(0.35, 0.4, 0.06, '#8a5d2b', x, 0.03, -6.2, office, 20);
     if (lamp) {
       cyl(0.04, 0.04, 0.5, '#374151', x, 1.2, -6.2, office, 8);
-      const shadeM = cyl(0.14, 0.3, 0.35, new THREE.MeshStandardMaterial({ color: '#fde68a', emissive: '#fbbf24', emissiveIntensity: 0.6 }), x, 1.62, -6.2, office, 20);
+      const shadeM = cyl(0.14, 0.3, 0.35, new THREE.MeshStandardMaterial({ color: '#F4F2F6', emissive: '#e8e0d4', emissiveIntensity: 0.45 }), x, 1.62, -6.2, office, 20);
       const pl = new THREE.PointLight('#ffd58a', 2.2, 7, 1.6); pl.position.set(x, 1.7, -6.0); office.add(pl);
     } else { // coffee machine
       box(0.55, 0.65, 0.5, '#e11d48', x, 1.26, -6.3, office);
@@ -448,13 +620,13 @@ const MEET_CHAIRS = [];
 {
   const mx0 = MEET.x0, mx1 = MEET.x1, mz0 = MEET.z0, mz1 = MEET.z1;
   const mcx = (mx0 + mx1) / 2, mcz = (mz0 + mz1) / 2;
-  const rug = box(mx1 - mx0 - 0.2, 0.05, mz1 - mz0 - 0.15, '#7f93ae', mcx, 0.065, mcz, office); rug.castShadow = false;
-  const rugIn = box(mx1 - mx0 - 0.7, 0.055, mz1 - mz0 - 0.55, '#8fa3bd', mcx, 0.07, mcz, office); rugIn.castShadow = false;
-  box(mx1 - mx0 - 1.4, 0.057, 0.12, '#d7e1ee', mcx, 0.075, mcz, office).castShadow = false;
+  const rug = box(mx1 - mx0 - 0.2, 0.05, mz1 - mz0 - 0.15, '#2C2345', mcx, 0.065, mcz, office); rug.castShadow = false;
+  const rugIn = box(mx1 - mx0 - 0.7, 0.055, mz1 - mz0 - 0.55, '#4A3473', mcx, 0.07, mcz, office); rugIn.castShadow = false;
+  box(mx1 - mx0 - 1.4, 0.057, 0.12, '#C9C7D0', mcx, 0.075, mcz, office).castShadow = false;
 
-  const FRAME = '#d0d7e2';
+  const FRAME = '#c9c7d0';
   const glassMat = new THREE.MeshStandardMaterial({
-    color: '#8fbdd6', transparent: true, opacity: 0.22, roughness: 0.06, metalness: 0.18,
+    color: '#8b7aa8', transparent: true, opacity: 0.22, roughness: 0.06, metalness: 0.18,
     depthWrite: false, side: THREE.DoubleSide,
   });
   function pane(w, h, d, x, y, z) {
@@ -490,7 +662,7 @@ const MEET_CHAIRS = [];
   box(0.06, 0.08, doorLeaf, FRAME, 0.02, 0.08, -doorLeaf / 2, door);
   const dp = new THREE.Mesh(new THREE.BoxGeometry(0.03, doorH - 0.28, doorLeaf - 0.08), glassMat);
   dp.position.set(0.02, doorH / 2, -doorLeaf / 2); dp.castShadow = dp.receiveShadow = false; door.add(dp);
-  box(0.04, 0.18, 0.04, '#f59e0b', 0.08, 1.05, -0.22, door);
+  box(0.04, 0.18, 0.04, '#5D3F99', 0.08, 1.05, -0.22, door);
   office.add(door);
 
   // front glass wall (faces the camera)
@@ -524,9 +696,9 @@ const MEET_CHAIRS = [];
   // signs: main plaque on the back wall (readable from the camera, like BREAKROOM)
   {
     const sign = canvasTex(768, 160, (g, w, h) => {
-      g.fillStyle = '#0f2a44'; rrect(g, 4, 4, w - 8, h - 8, 24); g.fill();
-      g.lineWidth = 8; g.strokeStyle = '#38bdf8'; g.stroke();
-      g.fillStyle = '#f8fafc'; g.font = 'bold 78px "Trebuchet MS", sans-serif';
+      g.fillStyle = '#140F26'; rrect(g, 4, 4, w - 8, h - 8, 20); g.fill();
+      g.lineWidth = 8; g.strokeStyle = '#5D3F99'; g.stroke();
+      g.fillStyle = '#FFFFFF'; g.font = '700 68px Cinzel, "Times New Roman", serif';
       g.textAlign = 'center'; g.textBaseline = 'middle';
       g.fillText('MEETING ROOM', w / 2, h / 2 + 4);
     });
@@ -535,9 +707,9 @@ const MEET_CHAIRS = [];
   }
   {
     const sign = canvasTex(512, 128, (g, w, h) => {
-      g.fillStyle = '#0f2a44'; rrect(g, 4, 4, w - 8, h - 8, 20); g.fill();
-      g.lineWidth = 7; g.strokeStyle = '#38bdf8'; g.stroke();
-      g.fillStyle = '#f8fafc'; g.font = 'bold 58px "Trebuchet MS", sans-serif';
+      g.fillStyle = '#140F26'; rrect(g, 4, 4, w - 8, h - 8, 16); g.fill();
+      g.lineWidth = 7; g.strokeStyle = '#5D3F99'; g.stroke();
+      g.fillStyle = '#FFFFFF'; g.font = '700 48px Cinzel, "Times New Roman", serif';
       g.textAlign = 'center'; g.textBaseline = 'middle';
       g.fillText('MEETING ROOM', w / 2, h / 2 + 3);
     });
@@ -550,31 +722,31 @@ const MEET_CHAIRS = [];
   // whiteboard on the back wall
   {
     const board = canvasTex(1024, 640, (g, w, h) => {
-      g.fillStyle = '#f8fafc'; g.fillRect(0, 0, w, h);
-      g.strokeStyle = '#e2e8f0'; g.lineWidth = 2;
+      g.fillStyle = '#f4f2f6'; g.fillRect(0, 0, w, h);
+      g.strokeStyle = 'rgba(44,35,69,0.12)'; g.lineWidth = 2;
       for (let y = 80; y < h; y += 48) { g.beginPath(); g.moveTo(30, y); g.lineTo(w - 30, y); g.stroke(); }
-      g.fillStyle = '#0ea5e9'; g.fillRect(0, 0, w, 64);
-      g.fillStyle = '#fff'; g.font = 'bold 44px "Trebuchet MS", sans-serif';
+      g.fillStyle = '#140F26'; g.fillRect(0, 0, w, 64);
+      g.fillStyle = '#fff'; g.font = '700 42px Cinzel, "Times New Roman", serif';
       g.textAlign = 'left'; g.textBaseline = 'middle';
       g.fillText('CAMPAIGN PLAN', 28, 34);
-      const items = ['1.  Flagship event concept', '2.  Stages & map layout', '3.  Sign-ups  ·  December', '4.  Play begins  ·  January'];
-      g.fillStyle = '#1e293b'; g.font = '36px "Trebuchet MS", sans-serif';
+      const items = ['1.  Flagship event concept', '2.  Stages & map layout', '3.  Sign-ups  ·  January', '4.  Play begins  ·  February'];
+      g.fillStyle = '#140F26'; g.font = '600 34px "Source Sans 3", sans-serif';
       items.forEach((t, i) => g.fillText(t, 48, 130 + i * 70));
-      const notes = [['#fde68a', 780, 110, 'AoS'], ['#bbf7d0', 880, 200, '40K'], ['#ddd6fe', 800, 310, 'ToW'], ['#fecaca', 890, 400, 'Custom']];
+      const notes = [['#e8e0d4', 780, 110, 'AoS'], ['#d4c8e6', 880, 200, '40K'], ['#c9c7d0', 800, 310, 'ToW'], ['#b9a7d4', 890, 400, 'Custom']];
       notes.forEach(([c, x, y, t]) => {
         g.fillStyle = c; g.fillRect(x, y, 110, 86);
-        g.fillStyle = 'rgba(0,0,0,.08)'; g.fillRect(x, y, 110, 8);
-        g.fillStyle = '#1f2937'; g.font = 'bold 28px "Trebuchet MS", sans-serif';
+        g.fillStyle = 'rgba(20,15,38,.1)'; g.fillRect(x, y, 110, 8);
+        g.fillStyle = '#140F26'; g.font = '700 26px "Source Sans 3", sans-serif';
         g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(t, x + 55, y + 48);
         g.textAlign = 'left';
       });
     });
-    box(3.76, 2.36, 0.08, '#cbd5e1', MEET_TABLE.x - 0.85, 2.55, ROOM.z0 + 0.16, office);
+    box(3.76, 2.36, 0.08, '#2C2345', MEET_TABLE.x - 0.85, 2.55, ROOM.z0 + 0.16, office);
     const wb = new THREE.Mesh(new THREE.PlaneGeometry(3.6, 2.2), new THREE.MeshBasicMaterial({ map: board.tex }));
     wb.position.set(MEET_TABLE.x - 0.85, 2.55, ROOM.z0 + 0.22);
     office.add(wb);
-    box(3.7, 0.08, 0.16, '#94a3b8', MEET_TABLE.x - 0.85, 1.38, ROOM.z0 + 0.28, office);
-    for (const [col, dx] of [['#1f2937', -0.5], ['#ef4444', -0.25], ['#2563eb', 0], ['#16a34a', 0.25]]) {
+    box(3.7, 0.08, 0.16, '#C9C7D0', MEET_TABLE.x - 0.85, 1.38, ROOM.z0 + 0.28, office);
+    for (const [col, dx] of [['#140F26', -0.5], ['#ef4444', -0.25], ['#5D3F99', 0], ['#16a34a', 0.25]]) {
       box(0.04, 0.16, 0.04, col, MEET_TABLE.x - 0.85 + dx, 1.5, ROOM.z0 + 0.34, office);
     }
   }
@@ -582,23 +754,23 @@ const MEET_CHAIRS = [];
   // wall screen beside the whiteboard
   {
     const scr = canvasTex(512, 320, (g, w, h) => {
-      g.fillStyle = '#0b1220'; g.fillRect(0, 0, w, h);
-      g.fillStyle = '#38bdf8'; g.font = 'bold 32px "Trebuchet MS", sans-serif';
-      g.fillText('War Ledger', 24, 42);
-      g.fillStyle = '#94a3b8'; g.font = '22px "Trebuchet MS", sans-serif';
+      g.fillStyle = '#140F26'; g.fillRect(0, 0, w, h);
+      g.fillStyle = '#FFFFFF'; g.font = '700 30px Cinzel, "Times New Roman", serif';
+      g.fillText('WAR LEDGER', 24, 42);
+      g.fillStyle = '#C9C7D0'; g.font = '600 20px "Source Sans 3", sans-serif';
       g.fillText('Campaign stages', 24, 74);
       const bars = [['#3B82F6', 0.85], ['#F59E0B', 0.62], ['#14B8A6', 0.74], ['#8B5CF6', 0.5], ['#EF4444', 0.4]];
       bars.forEach(([c, v], i) => {
         const y = 110 + i * 38;
-        g.fillStyle = '#1e293b'; g.fillRect(24, y, w - 48, 22);
+        g.fillStyle = '#2C2345'; g.fillRect(24, y, w - 48, 22);
         g.fillStyle = c; g.fillRect(24, y, (w - 48) * v, 22);
       });
     });
-    box(2.35, 1.55, 0.08, '#1f2937', MEET_TABLE.x + 2.15, 2.65, ROOM.z0 + 0.18, office);
+    box(2.35, 1.55, 0.08, '#140F26', MEET_TABLE.x + 2.15, 2.65, ROOM.z0 + 0.18, office);
     const sm = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 1.4), new THREE.MeshBasicMaterial({ map: scr.tex }));
     sm.position.set(MEET_TABLE.x + 2.15, 2.65, ROOM.z0 + 0.23);
     office.add(sm);
-    const gl = new THREE.PointLight('#4a7ab5', 1.4, 5, 1.6);
+    const gl = new THREE.PointLight('#5D3F99', 1.2, 5, 1.6);
     gl.position.set(MEET_TABLE.x + 2.15, 2.65, ROOM.z0 + 1.0);
     office.add(gl);
   }
@@ -608,6 +780,13 @@ const MEET_CHAIRS = [];
   const tx = MEET_TABLE.x, tz = MEET_TABLE.z, tw = MEET_TABLE.w, tl = MEET_TABLE.len;
   box(tw + 0.12, 0.1, tl + 0.12, WOOD_D, tx, 1.16, tz, office);
   box(tw, 0.1, tl, WOOD_L, tx, 1.22, tz, office);
+  {
+    const tableMap = canvasTex(512, 1536, (g, w, h) => drawCampaignMap(g, w, h, { title: '', labels: false }));
+    const mp = new THREE.Mesh(new THREE.PlaneGeometry(tw - 0.1, tl - 0.1), new THREE.MeshStandardMaterial({ map: tableMap.tex, roughness: 0.65, metalness: 0 }));
+    mp.rotation.x = -Math.PI / 2;
+    mp.position.set(tx, 1.276, tz);
+    mp.receiveShadow = true; office.add(mp);
+  }
   for (const sz of [-1, 1]) box(tw - 0.35, 1.08, 0.7, WOOD, tx, 0.55, tz + sz * (tl / 2 - 0.7), office);
   box(0.45, 1.08, tl - 1.2, WOOD_D, tx, 0.55, tz, office);
   cyl(0.32, 0.34, 0.08, '#334155', tx, 1.31, tz, office, 24);
@@ -622,7 +801,7 @@ const MEET_CHAIRS = [];
 
   // eight conference chairs (at least 6), facing the table
   const zs = [-2.1, -0.7, 0.7, 2.1].map((d) => tz + d);
-  const CH = '#3d4f6f', CH_D = '#2c3a54';
+  const CH = '#2C2345', CH_D = '#1a1628';
   function meetChair(x, z, yaw, hand) {
     const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = yaw;
     box(0.85, 0.12, 0.85, CH, 0, 0.58, 0, g);
@@ -715,7 +894,7 @@ function makeMinifig(color, initial, style) {
   const torso = new THREE.Mesh(tg, bodyM); torso.position.y = 0.45 + 0.08; torso.castShadow = torso.receiveShadow = true; upper.add(torso);
   const badge = canvasTex(128, 128, (g, w, h) => {
     g.fillStyle = 'rgba(255,255,255,.92)'; g.beginPath(); g.arc(64, 64, 58, 0, 7); g.fill();
-    g.fillStyle = shade(color, 0.72); g.font = 'bold 84px "Trebuchet MS", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(initial, 64, 70);
+    g.fillStyle = shade(color, 0.72); g.font = '700 84px "Source Sans 3", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(initial, 64, 70);
   });
   const bp = new THREE.Mesh(new THREE.PlaneGeometry(0.4, 0.4), new THREE.MeshBasicMaterial({ map: badge.tex, transparent: true }));
   bp.position.set(0, 0.6, 0.296); bp.rotation.x = 0.072; upper.add(bp);
@@ -775,14 +954,14 @@ function makeTag(name, role, color) {
   const long = (name || '').length > 20;
   const W = long ? 768 : 512;
   const { tex } = canvasTex(W, 150, (g, w, h) => {
-    g.fillStyle = 'rgba(255,255,255,.96)'; rrect(g, 6, 6, w - 12, h - 12, 30); g.fill();
+    g.fillStyle = 'rgba(244,242,246,.96)'; rrect(g, 6, 6, w - 12, h - 12, 30); g.fill();
     g.lineWidth = 9; g.strokeStyle = color; g.stroke();
     g.fillStyle = color; rrect(g, 24, 28, 14, h - 56, 7); g.fill();
     g.textAlign = 'left'; g.textBaseline = 'alphabetic';
-    let size = long ? 44 : 56; g.font = `bold ${size}px "Trebuchet MS", sans-serif`;
-    while (g.measureText(name).width > w - 80 && size > 22) { size -= 2; g.font = `bold ${size}px "Trebuchet MS", sans-serif`; }
-    g.fillStyle = '#111827'; g.fillText(name, 54, 78);
-    g.font = '32px "Trebuchet MS", sans-serif'; g.fillStyle = shade(color, 0.62);
+    let size = long ? 44 : 56; g.font = `700 ${size}px "Source Sans 3", sans-serif`;
+    while (g.measureText(name).width > w - 80 && size > 22) { size -= 2; g.font = `700 ${size}px "Source Sans 3", sans-serif`; }
+    g.fillStyle = '#140F26'; g.fillText(name, 54, 78);
+    g.font = '600 32px "Source Sans 3", sans-serif'; g.fillStyle = shade(color, 0.62);
     let r = role; while (g.measureText(r).width > w - 80 && r.length > 3) r = r.slice(0, -2);
     g.fillText(r === role ? r : r + '…', 54, 118);
   });
@@ -793,19 +972,19 @@ function makeTag(name, role, color) {
 function makeBubble(text, color) {
   const W = 440, pad = 22, font = 30, lh = 38;
   const probe = document.createElement('canvas').getContext('2d');
-  probe.font = `${font}px "Trebuchet MS", sans-serif`;
+  probe.font = `${font}px "Source Sans 3", sans-serif`;
   const words = text.split(/\s+/), lines = []; let cur = '';
   for (const w of words) { const t = cur ? cur + ' ' + w : w; if (probe.measureText(t).width > W - pad * 2 && cur) { lines.push(cur); cur = w; } else cur = t; }
   if (cur) lines.push(cur);
   const shown = lines.slice(0, 4); if (lines.length > 4) shown[3] = shown[3].replace(/.{0,2}$/, '…');
   const H = shown.length * lh + pad * 2 - 6, tail = 26;
   const { tex } = canvasTex(W, H + tail, (g) => {
-    g.fillStyle = '#ffffff'; rrect(g, 5, 5, W - 10, H - 5, 26); g.fill();
+    g.fillStyle = '#F4F2F6'; rrect(g, 5, 5, W - 10, H - 5, 26); g.fill();
     g.lineWidth = 6; g.strokeStyle = color; g.stroke();
     g.beginPath(); g.moveTo(W / 2 - 18, H - 3); g.lineTo(W / 2, H + tail - 4); g.lineTo(W / 2 + 18, H - 3); g.closePath();
-    g.fillStyle = '#ffffff'; g.fill(); g.stroke();
-    g.fillStyle = '#ffffff'; g.fillRect(W / 2 - 14, H - 9, 28, 10);
-    g.fillStyle = '#1f2937'; g.font = `${font}px "Trebuchet MS", sans-serif`; g.textBaseline = 'alphabetic';
+    g.fillStyle = '#F4F2F6'; g.fill(); g.stroke();
+    g.fillStyle = '#F4F2F6'; g.fillRect(W / 2 - 14, H - 9, 28, 10);
+    g.fillStyle = '#140F26'; g.font = `${font}px "Source Sans 3", sans-serif`; g.textBaseline = 'alphabetic';
     shown.forEach((l, i) => g.fillText(l, pad, pad + 24 + i * lh));
   });
   const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, toneMapped: false, depthWrite: false }));
@@ -817,7 +996,7 @@ function makeBang() {
   const { tex } = canvasTex(128, 128, (g) => {
     g.fillStyle = '#ef4444'; g.beginPath(); g.arc(64, 64, 56, 0, 7); g.fill();
     g.lineWidth = 8; g.strokeStyle = '#fff'; g.stroke();
-    g.fillStyle = '#fff'; g.font = 'bold 88px "Trebuchet MS", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('!', 64, 70);
+    g.fillStyle = '#fff'; g.font = '700 88px "Source Sans 3", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('!', 64, 70);
   });
   const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, toneMapped: false, depthWrite: false }));
   s.scale.set(0.62, 0.62, 1); s.center.set(0.5, 0);
@@ -1195,7 +1374,7 @@ function renderHud() {
     return `<div class="bot"><div class="dot" style="background:${color}"></div>
       <div class="name">${esc(c.name)}<small>${esc(c.role)}</small></div>
       <div class="badge" style="background:${st.color}">${esc(st.label)}</div>
-      <div class="task">${esc(c.task) || '<span style="color:#94a3b8">No task reported</span>'}${withName ? ` <b>→ ${esc(c.with)}</b>` : ''}</div>
+      <div class="task">${esc(c.task) || '<span style="color:#4A3473">No task reported</span>'}${withName ? ` <b>→ ${esc(c.with)}</b>` : ''}</div>
       ${c.message ? `<div class="msg">“${esc(c.message)}”</div>` : ''}</div>`;
   }).join('');
   renderFoot();
@@ -1204,10 +1383,10 @@ function renderFoot() {
   if (!lastStatus) return;
   const d = new Date(lastStatus.updated);
   const valid = !isNaN(d);
-  const when = valid ? `${londonFmt.format(d)} <span style="color:#94a3b8">(London time)</span>` : esc(lastStatus.updated || 'unknown');
+  const when = valid ? `${londonFmt.format(d)} <span style="color:#4A3473">(London time)</span>` : esc(lastStatus.updated || 'unknown');
   const age = valid ? ` · ${ago(Date.now() - d.getTime())}` : '';
   const live = statusSource === 'live';
-  const srcTxt = statusSource === 'preview' ? `<span class="src" style="color:#2563eb">◇ preview (not from status.json)</span>` : live ? `<span class="src" style="color:#16a34a">● live</span> · status.json every ${POLL_MS / 1000}s${lastFetchOk === false ? ' <span style="color:#dc2626">(last poll failed)</span>' : ''}`
+  const srcTxt = statusSource === 'preview' ? `<span class="src" style="color:#5D3F99">◇ preview (not from status.json)</span>` : live ? `<span class="src" style="color:#16a34a">● live</span> · status.json every ${POLL_MS / 1000}s${lastFetchOk === false ? ' <span style="color:#dc2626">(last poll failed)</span>' : ''}`
     : `<span class="src" style="color:#d97706">◐ embedded snapshot</span> · open via http for live updates`;
   $('#foot').innerHTML = `Updated: ${when}${age}<br>${srcTxt}`;
 }
