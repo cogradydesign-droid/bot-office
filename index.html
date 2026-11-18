@@ -54,7 +54,17 @@
   .dec-link:focus-visible { outline: 2px solid #5D3F99; outline-offset: 2px; }
   #dec-bar { display: none; align-items: center; justify-content: space-between; gap: 10px; margin: 2px 16px 6px; padding: 7px 10px; border-radius: 10px;
     background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.35); font-size: 12.5px; font-weight: 700; color: #7f1d1d; }
-  .decs { grid-column: 2 / 4; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 700; color: #b91c1c; }
+  .decs { grid-column: 2 / 4; display: flex; flex-direction: column; align-items: stretch; gap: 6px; font-size: 12px; font-weight: 700; color: #b91c1c; }
+  .decs .decs-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .matters { display: flex; flex-wrap: wrap; gap: 6px; }
+  a.matter { font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif; font-size: 11.5px; font-weight: 700; letter-spacing: .02em;
+    color: #7f1d1d; background: rgba(239,68,68,.1); border: 1px solid rgba(185,28,28,.35); border-radius: 999px; padding: 3px 9px;
+    text-decoration: none; line-height: 1.3; }
+  a.matter:hover { background: rgba(239,68,68,.22); color: #991b1b; }
+  a.matter:focus-visible { outline: 2px solid #5D3F99; outline-offset: 2px; }
+  a.matter.q { color: #1e3a5f; background: rgba(58,92,138,.1); border-color: rgba(31,58,95,.35); }
+  a.matter.q:hover { background: rgba(58,92,138,.22); color: #1f3a5f; }
+  #dec-priv { flex-basis: 100%; font-family: "Cormorant Garamond", Georgia, serif; font-size: 12.5px; font-style: italic; font-weight: 600; color: #7f1d1d; letter-spacing: .01em; }
   .bot.extra .dot { opacity: .55; }
   .sec-title { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #4A3473; margin: 10px 0 2px; padding-top: 8px; border-top: 1px solid rgba(44,35,69,.14); font-weight: 700; }
   #supply-bar { display: none; margin: 0 16px 8px; padding: 7px 10px; border-radius: 10px;
@@ -93,7 +103,12 @@
   .parch .role { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 15px; color: #6b4a1e; margin: 0 0 14px; }
   .parch .rule { height: 1px; margin: 0 auto 14px; width: 70%; background: linear-gradient(90deg, transparent, #8a6a2c, transparent); }
   .parch .speech { font-family: "Cormorant Garamond", Georgia, serif; font-size: 25px; line-height: 1.3; font-weight: 600; color: #2a1a0c; margin: 0 0 6px; }
-  .parch .sub2 { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 16.5px; color: #5a3d1a; margin: 0 0 20px; }
+  .parch .sub2 { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 16.5px; color: #5a3d1a; margin: 0 0 12px; }
+  .parch .matters { justify-content: center; gap: 8px; margin: 0 0 18px; }
+  .parch a.matter { font-family: Cinzel, serif; font-size: 13px; color: #2a1a0c; background: rgba(42,26,12,.08); border: 1px solid rgba(107,74,30,.45); padding: 5px 12px; }
+  .parch a.matter:hover { background: rgba(42,26,12,.16); color: #7a1f1f; }
+  .parch a.matter.q { color: #1f3a5f; background: rgba(31,58,95,.08); border-color: rgba(31,58,95,.4); }
+  .parch a.matter.q:hover { background: rgba(31,58,95,.16); color: #1f3a5f; }
   .parch .acts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0 0 14px; }
   .act { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 14px 6px 12px; border-radius: 6px; text-decoration: none; cursor: pointer;
     font-family: "Cinzel Decorative", Cinzel, serif; font-weight: 700; font-size: 17px; letter-spacing: .02em; color: #f7ecd0; border: 2px solid #2a1a0c;
@@ -138,7 +153,7 @@
   #err { position: fixed; bottom: 14px; left: 14px; background: #f3e8ee; color: #6b1c3a; border: 1px solid #c9a0ae; border-radius: 10px; padding: 8px 12px; font-size: 12px; display: none; max-width: 420px; }
 </style>
 <script type="importmap">
-{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/addons/" } }
 </script>
 </head>
 <body>
@@ -149,7 +164,7 @@
     <div class="hq">HQ</div>
   </div>
   <div class="sub">Chris's Grok Bot teammates, live</div>
-  <div id="dec-bar"><span id="dec-total"></span><a class="dec-link" id="dec-all" target="_blank" rel="noopener noreferrer" href="https://github.com/cogradydesign-droid/bot-office-decisions/issues?q=is%3Aopen+label%3Adecision-open">All open decisions</a><span id="dec-sealed"></span></div>
+  <div id="dec-bar"><span id="dec-total"></span><a class="dec-link" id="dec-all" target="_blank" rel="noopener noreferrer" href="https://github.com/cogradydesign-droid/bot-office-decisions/issues">Open the board</a><span id="dec-priv">Links open your private board. Only you can see them when signed in to GitHub.</span><span id="dec-sealed"></span></div>
   <div id="supply-bar"><span id="supply-used"></span><span id="supply-reset"></span></div>
   <div id="list"></div>
   <div id="foot">
@@ -175,12 +190,13 @@
     <div class="rule"></div>
     <p class="speech" id="dp-speech"></p>
     <p class="sub2" id="dp-sub"></p>
+    <div class="matters" id="dp-matters"></div>
     <div class="acts">
       <a class="act seal" id="dp-seal" target="_blank" rel="noopener noreferrer"><span class="ico">⚜</span>Seal it<small>approve</small></a>
       <a class="act strike" id="dp-strike" target="_blank" rel="noopener noreferrer"><span class="ico">⚔</span>Strike it<small>decline</small></a>
       <a class="act parley" id="dp-parley" target="_blank" rel="noopener noreferrer"><span class="ico">✉</span>Parley<small>ask a question</small></a>
     </div>
-    <p class="foot2">Each button opens your private scroll of matters on GitHub, where you give the word on each one. Only you can read it.</p>
+    <p class="foot2">Each link opens your private board on GitHub, where you give the word on that matter. Only you can see them when signed in.</p>
     <button type="button" class="later" id="dp-later">Not now</button>
     <div class="fx stamp" aria-hidden="true">⚜</div><div class="fx slash" aria-hidden="true"></div><div class="fx parl" aria-hidden="true">✉</div>
   </div>
@@ -188,7 +204,7 @@
 <div id="err"></div>
 
 <script id="embedded-status" type="application/json">{
-  "updated": "2026-11-18T16:43:39Z",
+  "updated": "2026-11-18T16:50:47Z",
   "bots": [
     {
       "name": "Malcedor",
@@ -209,7 +225,7 @@
       "task": "Leading the marketing department",
       "message": "",
       "with": "",
-      "decisions": 0,
+      "decisions": 6,
       "usage_pct": 15
     },
     {
@@ -280,13 +296,45 @@
     }
   ],
   "decisions": {
-    "total": 7,
+    "total": 14,
     "by_bot": {
-      "finance": 1,
       "lead-developer": 3,
+      "finance": 2,
       "copywriter": 3,
-      "branding-director": 1
+      "branding-director": 1,
+      "marketing-manager": 6
     },
+    "issues": {
+      "lead-developer": [
+        2,
+        7,
+        10
+      ],
+      "finance": [
+        4,
+        11
+      ],
+      "copywriter": [
+        5,
+        6,
+        7
+      ],
+      "branding-director": [
+        8
+      ],
+      "marketing-manager": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    "questions": [
+      12,
+      15
+    ],
     "sealed_week": 3
   },
   "usage": {
@@ -1562,7 +1610,52 @@ function ago(ms) {
   if (s < 172800) return Math.round(s / 3600) + ' h ago'; return Math.round(s / 86400) + ' days ago';
 }
 const DEC_BASE = 'https://github.com/cogradydesign-droid/bot-office-decisions/issues?q=';
-const decUrl = (slug) => DEC_BASE + 'is%3Aopen+label%3Abot%3A' + encodeURIComponent(slug) + '+label%3Adecision-open';
+const ISSUE_BASE = 'https://github.com/cogradydesign-droid/bot-office-decisions/issues/';
+const BOARD_URL = 'https://github.com/cogradydesign-droid/bot-office-decisions/issues';
+const decUrl = (slug) => DEC_BASE + 'is%3Aopen+label%3Abot%3A' + encodeURIComponent(slug);
+function questionSet() {
+  const raw = lastStatus && lastStatus.decisions && lastStatus.decisions.questions;
+  const set = new Set();
+  if (Array.isArray(raw)) {
+    for (const x of raw) { const n = Math.floor(Number(x)); if (n >= 1) set.add(n); }
+  } else if (raw && typeof raw === 'object') {
+    for (const nums of Object.values(raw)) {
+      if (!Array.isArray(nums)) continue;
+      for (const x of nums) { const n = Math.floor(Number(x)); if (n >= 1) set.add(n); }
+    }
+  }
+  return set;
+}
+function issuesFor(slug) {
+  if (!slug || !lastStatus || !lastStatus.decisions) return [];
+  const raw = lastStatus.decisions.issues && lastStatus.decisions.issues[slug];
+  if (!Array.isArray(raw)) return [];
+  const qs = questionSet();
+  const out = [], seen = new Set();
+  for (const item of raw) {
+    let n, kind;
+    if (item && typeof item === 'object') {
+      n = Math.floor(Number(item.n ?? item.number ?? item.id));
+      kind = item.kind === 'question' ? 'question' : 'decision';
+    } else {
+      n = Math.floor(Number(item));
+      kind = 'decision';
+    }
+    if (!Number.isFinite(n) || n < 1 || seen.has(n)) continue;
+    if (qs.has(n)) kind = 'question';
+    seen.add(n);
+    out.push({ n, kind });
+  }
+  return out;
+}
+function matterLinks(slug) {
+  const items = issuesFor(slug);
+  if (!items.length) return '';
+  return '<div class="matters">' + items.map((it) => {
+    const label = it.kind === 'question' ? 'Question #' + it.n : 'Decision #' + it.n;
+    return `<a class="matter${it.kind === 'question' ? ' q' : ''}" href="${ISSUE_BASE}${it.n}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`;
+  }).join('') + '</div>';
+}
 const NAME_SLUG = { 'Marketing Manager': 'marketing-manager', 'Content Creator': 'content-creator', 'Branding Director': 'branding-director',
   'Narrative Campaign Event Organiser': 'event-organiser', 'Programme Manager': 'programme-manager', 'Social Media Expert': 'social-media-expert',
   'Market Researcher': 'market-researcher' };
@@ -1604,6 +1697,8 @@ function rationsRow(pct) {
 }
 function decCount(c) {
   const slug = NAME_SLUG[c.name];
+  const listed = slug ? issuesFor(slug) : [];
+  if (listed.length) return { slug, n: listed.length };
   const fromMap = slug && lastStatus && lastStatus.decisions && lastStatus.decisions.by_bot ? lastStatus.decisions.by_bot[slug] : undefined;
   const n = Number.isFinite(c.decisions) ? c.decisions : (Number.isFinite(fromMap) ? fromMap : 0);
   return { slug, n: Math.max(0, Math.floor(n)) };
@@ -1645,15 +1740,19 @@ function renderHud() {
       <div class="task">${esc(c.task) || '<span style="color:#4A3473">No task reported</span>'}${withName ? ` <b>→ ${esc(c.with)}</b>` : ''}</div>
       ${c.message ? `<div class="msg">“${esc(c.message)}”</div>` : ''}
       ${rationsRow(usageOf(c.name, d.slug))}
-      ${d.slug && d.n > 0 ? `<div class="decs"><span>⚜ ${decWord(d.n)}</span><button type="button" class="dec-link" data-dispatch="${esc(d.slug)}">Review &amp; respond</button></div>` : ''}</div>`;
+      ${d.slug && d.n > 0 ? `<div class="decs"><div class="decs-head"><span>⚜ ${decWord(d.n)}</span><button type="button" class="dec-link" data-dispatch="${esc(d.slug)}">Review &amp; respond</button></div>${matterLinks(d.slug)}</div>` : ''}</div>`;
   }).join('');
   const by = (lastStatus.decisions && lastStatus.decisions.by_bot) || {};
-  const extras = Object.keys(EXTRA_BOTS).filter((k) => Number.isFinite(by[k]) && by[k] > 0);
+  const issueMap = (lastStatus.decisions && lastStatus.decisions.issues) || {};
+  const extras = Object.keys(EXTRA_BOTS).filter((k) => (Number.isFinite(by[k]) && by[k] > 0) || (Array.isArray(issueMap[k]) && issueMap[k].length > 0));
   if (extras.length) {
-    list.innerHTML += '<div class="sec-title">Also waiting on you</div>' + extras.map((k) => `<div class="bot extra"><div class="dot" style="background:#94a3b8"></div>
+    list.innerHTML += '<div class="sec-title">Also waiting on you</div>' + extras.map((k) => {
+      const n = issuesFor(k).length || Math.max(0, Math.floor(by[k] || 0));
+      return `<div class="bot extra"><div class="dot" style="background:#94a3b8"></div>
       <div class="name">${esc(EXTRA_BOTS[k][0])}<small>${esc(EXTRA_BOTS[k][1])}</small></div><div></div>
       ${rationsRow(usageOf(EXTRA_BOTS[k][0], k))}
-      <div class="decs"><span>⚜ ${decWord(Math.floor(by[k]))}</span><button type="button" class="dec-link" data-dispatch="${esc(k)}">Review &amp; respond</button></div></div>`).join('');
+      <div class="decs"><div class="decs-head"><span>⚜ ${decWord(n)}</span><button type="button" class="dec-link" data-dispatch="${esc(k)}">Review &amp; respond</button></div>${matterLinks(k)}</div></div>`;
+    }).join('');
   }
   const rest = Object.keys(EXTRA_BOTS).filter((k) => !extras.includes(k) && Number.isFinite(usageOf(EXTRA_BOTS[k][0], k)));
   if (rest.length) {
@@ -1686,6 +1785,8 @@ const SLUG_INFO = { 'marketing-manager': ['Marketing Manager', 'Marketing strate
   'market-researcher': ['Market Researcher', 'Market research'], ...EXTRA_BOTS };
 const SLUG_OF = Object.fromEntries(Object.entries(NAME_SLUG).map(([n, sl]) => [sl, n]));
 function slugCount(slug) {
+  const listed = issuesFor(slug);
+  if (listed.length) return listed.length;
   const by = (lastStatus && lastStatus.decisions && lastStatus.decisions.by_bot) || {};
   if (Number.isFinite(by[slug])) return Math.max(0, Math.floor(by[slug]));
   const cfg = lastStatus && lastStatus.bots.find((b) => NAME_SLUG[b.name] === slug);
@@ -1705,7 +1806,10 @@ function openDispatch(slug) {
   }
   $('#dp-speech').textContent = n === 1 ? 'Commander, I have a matter awaiting your seal.' : `Commander, I have ${n} matters awaiting your seal.`;
   $('#dp-sub').textContent = n === 1 ? 'The campaign cannot move until you give the word.' : 'The campaign cannot move until you give the word on each.';
-  const url = decUrl(slug);
+  const listed = issuesFor(slug);
+  const matters = $('#dp-matters');
+  if (matters) matters.innerHTML = matterLinks(slug);
+  const url = listed.length === 1 ? ISSUE_BASE + listed[0].n : (slug ? decUrl(slug) : BOARD_URL);
   for (const id of ['seal', 'strike', 'parley']) $('#dp-' + id).href = url;
   const dp = $('#dispatch'); dp.classList.add('open'); dp.setAttribute('aria-hidden', 'false');
   $('#parch').className = 'parch';

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-18T16:43:39Z",
+  "updated": "2026-11-18T16:50:47Z",
   "bots": [
     {
       "name": "Malcedor",
@@ -20,7 +20,7 @@
       "task": "Leading the marketing department",
       "message": "",
       "with": "",
-      "decisions": 0,
+      "decisions": 6,
       "usage_pct": 15
     },
     {
@@ -91,13 +91,45 @@
     }
   ],
   "decisions": {
-    "total": 7,
+    "total": 14,
     "by_bot": {
-      "finance": 1,
       "lead-developer": 3,
+      "finance": 2,
       "copywriter": 3,
-      "branding-director": 1
+      "branding-director": 1,
+      "marketing-manager": 6
     },
+    "issues": {
+      "lead-developer": [
+        2,
+        7,
+        10
+      ],
+      "finance": [
+        4,
+        11
+      ],
+      "copywriter": [
+        5,
+        6,
+        7
+      ],
+      "branding-director": [
+        8
+      ],
+      "marketing-manager": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    "questions": [
+      12,
+      15
+    ],
     "sealed_week": 3
   },
   "usage": {
