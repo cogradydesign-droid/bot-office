@@ -57,6 +57,18 @@
   .decs { grid-column: 2 / 4; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 700; color: #b91c1c; }
   .bot.extra .dot { opacity: .55; }
   .sec-title { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #4A3473; margin: 10px 0 2px; padding-top: 8px; border-top: 1px solid rgba(44,35,69,.14); font-weight: 700; }
+  #supply-bar { display: none; margin: 0 16px 8px; padding: 7px 10px; border-radius: 10px;
+    background: rgba(184,145,61,.12); border: 1px solid rgba(107,74,30,.35); color: #6b4a1e;
+    flex-direction: column; gap: 2px; }
+  #supply-bar.show { display: flex; }
+  #supply-used { font-family: Cinzel, "Times New Roman", serif; font-size: 12.5px; font-weight: 700; letter-spacing: .04em; }
+  #supply-reset { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 600; font-size: 12.5px; color: #6b4a1e; }
+  .rations { grid-column: 2 / 4; display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #6b4a1e; margin-top: 2px; }
+  .rations .bar { flex: 1; height: 7px; background: rgba(44,35,69,.12); border: 1px solid rgba(107,74,30,.28); border-radius: 999px; overflow: hidden; }
+  .rations .bar > i { display: block; height: 100%; background: linear-gradient(90deg, #8a6a2c, #d4af37); border-radius: 999px; }
+  .rations .pct { font-family: Cinzel, serif; font-weight: 700; font-size: 11px; letter-spacing: .04em; min-width: 3.4em; text-align: right; color: #6b4a1e; }
+  .rations .lbl { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: #4A3473; flex-shrink: 0; }
+  .parch .rations-line { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 15px; color: #6b4a1e; margin: 0 0 12px; }
 
   /* ---- dispatch card (game-style decisions) ---- */
   .dec-link, .dec-btn { cursor: pointer; }
@@ -138,6 +150,7 @@
   </div>
   <div class="sub">Chris's Grok Bot teammates, live</div>
   <div id="dec-bar"><span id="dec-total"></span><a class="dec-link" id="dec-all" target="_blank" rel="noopener noreferrer" href="https://github.com/cogradydesign-droid/bot-office-decisions/issues?q=is%3Aopen+label%3Adecision-open">All open decisions</a><span id="dec-sealed"></span></div>
+  <div id="supply-bar"><span id="supply-used"></span><span id="supply-reset"></span></div>
   <div id="list"></div>
   <div id="foot">
     <div id="foot-meta"></div>
@@ -158,6 +171,7 @@
     <div class="crest">WAR LEDGER · DISPATCH</div>
     <h2 id="dp-from"></h2>
     <div class="role" id="dp-role"></div>
+    <div class="rations-line" id="dp-rations" hidden></div>
     <div class="rule"></div>
     <p class="speech" id="dp-speech"></p>
     <p class="sub2" id="dp-sub"></p>
@@ -174,57 +188,62 @@
 <div id="err"></div>
 
 <script id="embedded-status" type="application/json">{
-  "updated": "2026-11-15T15:00:52Z",
+  "updated": "2026-11-18T16:42:24Z",
   "bots": [
     {
       "name": "Malcedor",
       "role": "Chief of staff",
       "color": "#3B82F6",
       "state": "working",
-      "task": "Website fixes and getting the Bot Office live",
+      "task": "Running the decision board and departments",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 21
     },
     {
       "name": "Marketing Manager",
       "role": "Marketing strategy",
       "color": "#F59E0B",
       "state": "working",
-      "task": "Reworking week one around conversion",
+      "task": "Leading the marketing department",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 15
     },
     {
       "name": "Content Creator",
       "role": "Content creation",
       "color": "#14B8A6",
-      "state": "awaiting_approval",
-      "task": "Website copy fixes, waiting for Chris",
+      "state": "idle",
+      "task": "No task reported",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 5
     },
     {
       "name": "Branding Director",
       "role": "Brand & identity",
       "color": "#8B5CF6",
       "state": "awaiting_approval",
-      "task": "Homepage copy and logo, waiting for Chris",
+      "task": "Decisions waiting on GitHub",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 1,
+      "usage_pct": 11
     },
     {
       "name": "Narrative Campaign Event Organiser",
       "role": "Campaign events",
       "color": "#EF4444",
-      "state": "awaiting_approval",
-      "task": "The Last Low Tide concept, waiting for Chris",
+      "state": "idle",
+      "task": "No task reported",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 3
     },
     {
       "name": "Programme Manager",
@@ -234,33 +253,62 @@
       "task": "Tracking the launch schedule",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 8
     },
     {
       "name": "Social Media Expert",
       "role": "Social media",
       "color": "#EC4899",
-      "state": "awaiting_approval",
-      "task": "4-week posting calendar, waiting for Chris",
+      "state": "idle",
+      "task": "No task reported",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 13
     },
     {
       "name": "Market Researcher",
       "role": "Market research",
       "color": "#6366F1",
       "state": "idle",
-      "task": "",
+      "task": "No task reported",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 5
     }
   ],
   "decisions": {
-    "total": 0,
-    "by_bot": {},
-    "sealed_week": 0
+    "total": 8,
+    "by_bot": {
+      "finance": 1,
+      "lead-developer": 3,
+      "copywriter": 4,
+      "branding-director": 1
+    },
+    "sealed_week": 2
+  },
+  "usage": {
+    "by_bot": {
+      "Malcedor": 21,
+      "Marketing Manager": 15,
+      "Social Media Expert": 13,
+      "Branding Director": 11,
+      "Programme Manager": 8,
+      "Copywriter": 6,
+      "Lead Developer": 5,
+      "Market Researcher": 5,
+      "Content Creator": 5,
+      "Narrative Campaign Event Organiser": 3,
+      "Finance": 2,
+      "Product Strategist": 2,
+      "Design Lead": 1,
+      "UX Designer": 0
+    },
+    "period": "this week",
+    "weekly_limit_used_pct": 1.8,
+    "resets": "Fri 20 Nov 22:37 UK"
   }
 }</script>
 
@@ -1067,23 +1115,34 @@ function makeMinifig(color, initial, style) {
 }
 
 /* ---------- label sprites ---------- */
-function makeTag(name, role, color) {
+function makeTag(name, role, color, usagePct) {
   const long = (name || '').length > 20;
+  const hasUse = Number.isFinite(usagePct);
   const W = long ? 768 : 512;
-  const { tex } = canvasTex(W, 150, (g, w, h) => {
+  const H = hasUse ? 196 : 150;
+  const { tex } = canvasTex(W, H, (g, w, h) => {
     g.fillStyle = 'rgba(244,242,246,.96)'; rrect(g, 6, 6, w - 12, h - 12, 30); g.fill();
     g.lineWidth = 9; g.strokeStyle = color; g.stroke();
     g.fillStyle = color; rrect(g, 24, 28, 14, h - 56, 7); g.fill();
     g.textAlign = 'left'; g.textBaseline = 'alphabetic';
     let size = long ? 44 : 56; g.font = `700 ${size}px "Source Sans 3", sans-serif`;
     while (g.measureText(name).width > w - 80 && size > 22) { size -= 2; g.font = `700 ${size}px "Source Sans 3", sans-serif`; }
-    g.fillStyle = '#140F26'; g.fillText(name, 54, 78);
+    const nameY = hasUse ? 70 : 78;
+    g.fillStyle = '#140F26'; g.fillText(name, 54, nameY);
     g.font = '600 32px "Source Sans 3", sans-serif'; g.fillStyle = shade(color, 0.62);
     let r = role; while (g.measureText(r).width > w - 80 && r.length > 3) r = r.slice(0, -2);
-    g.fillText(r === role ? r : r + '…', 54, 118);
+    g.fillText(r === role ? r : r + '…', 54, nameY + 40);
+    if (hasUse) {
+      const bx = 54, by = h - 48, bw = w - 80 - 90, bh = 16;
+      g.fillStyle = 'rgba(44,35,69,.14)'; rrect(g, bx, by, bw, bh, 8); g.fill();
+      const fill = (Math.max(0, Math.min(100, usagePct)) / 100) * bw;
+      if (fill > 0) { g.fillStyle = '#b8913d'; rrect(g, bx, by, Math.max(fill, 8), bh, 8); g.fill(); }
+      g.font = '700 26px Cinzel, "Source Sans 3", serif'; g.fillStyle = '#6b4a1e'; g.textAlign = 'right';
+      g.fillText((Number.isInteger(usagePct) ? String(usagePct) : usagePct.toFixed(1)) + '%', w - 28, by + 15);
+    }
   });
   const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, toneMapped: false, depthWrite: false }));
-  s.scale.set(long ? 4.2 : 3.0, 0.88, 1); s.center.set(0.5, 0);
+  s.scale.set(long ? 4.2 : 3.0, hasUse ? 1.15 : 0.88, 1); s.center.set(0.5, 0);
   return s;
 }
 function makeBubble(text, color) {
@@ -1164,10 +1223,11 @@ class Bot {
     this.setIdentity(cfg);
   }
   setIdentity(cfg) {
-    if (this.tag && this.cfg.role === cfg.role && this.cfg.color === cfg.color) return;
-    this.cfg.role = cfg.role; this.cfg.color = cfg.color;
+    const pct = Number.isFinite(cfg.usage_pct) ? cfg.usage_pct : usageOf(cfg.name);
+    if (this.tag && this.cfg.role === cfg.role && this.cfg.color === cfg.color && this.cfg.usage_pct === pct) return;
+    this.cfg.role = cfg.role; this.cfg.color = cfg.color; this.cfg.usage_pct = pct;
     if (this.tag) this.root.remove(this.tag);
-    this.tag = makeTag(this.name, cfg.role || '', this.color);
+    this.tag = makeTag(this.name, cfg.role || '', this.color, pct);
     this.root.add(this.tag);
   }
   setBubble(text) {
@@ -1506,10 +1566,42 @@ const decUrl = (slug) => DEC_BASE + 'is%3Aopen+label%3Abot%3A' + encodeURICompon
 const NAME_SLUG = { 'Marketing Manager': 'marketing-manager', 'Content Creator': 'content-creator', 'Branding Director': 'branding-director',
   'Narrative Campaign Event Organiser': 'event-organiser', 'Programme Manager': 'programme-manager', 'Social Media Expert': 'social-media-expert',
   'Market Researcher': 'market-researcher' };
-// Teammates without a desk in the office still get a row when they have decisions waiting.
+// Teammates without a desk in the office still get a row when they have decisions waiting, or a rations share.
 const EXTRA_BOTS = { 'finance': ['Finance', 'Billing & Stripe'], 'lead-developer': ['Lead Developer', 'App & code'], 'copywriter': ['Copywriter', 'Words & copy'],
-  'design-lead': ['Design Lead', 'Design'], 'product-strategist': ['Product Strategist', 'Product strategy'] };
+  'design-lead': ['Design Lead', 'Design'], 'product-strategist': ['Product Strategist', 'Product strategy'], 'ux-designer': ['UX Designer', 'UX design'] };
 const decWord = (n) => n === 1 ? '1 matter awaiting your seal' : n + ' matters awaiting your seal';
+function usageOf(name, slug) {
+  const bots = lastStatus && lastStatus.bots;
+  const b = name && bots && bots.find((x) => x.name === name);
+  if (b && Number.isFinite(b.usage_pct)) return b.usage_pct;
+  const map = lastStatus && lastStatus.usage && lastStatus.usage.by_bot;
+  if (map) {
+    if (name && Number.isFinite(map[name])) return map[name];
+    if (slug && Number.isFinite(map[slug])) return map[slug];
+  }
+  return null;
+}
+function fmtPct(n) {
+  if (!Number.isFinite(n)) return '';
+  return (Number.isInteger(n) ? String(n) : n.toFixed(1)) + '%';
+}
+function maxUsageShare() {
+  const vals = [];
+  if (lastStatus && Array.isArray(lastStatus.bots)) {
+    for (const b of lastStatus.bots) if (Number.isFinite(b.usage_pct)) vals.push(b.usage_pct);
+  }
+  const map = lastStatus && lastStatus.usage && lastStatus.usage.by_bot;
+  if (map) {
+    for (const v of Object.values(map)) if (Number.isFinite(v)) vals.push(v);
+  }
+  return vals.length ? Math.max(...vals) : 0;
+}
+function rationsRow(pct) {
+  if (!Number.isFinite(pct)) return '';
+  const max = maxUsageShare();
+  const w = max > 0 ? Math.max(0, Math.min(100, (pct / max) * 100)) : 0;
+  return `<div class="rations"><span class="lbl">Rations</span><span class="bar"><i style="width:${w}%"></i></span><span class="pct">${esc(fmtPct(pct))}</span></div>`;
+}
 function decCount(c) {
   const slug = NAME_SLUG[c.name];
   const fromMap = slug && lastStatus && lastStatus.decisions && lastStatus.decisions.by_bot ? lastStatus.decisions.by_bot[slug] : undefined;
@@ -1527,6 +1619,16 @@ function renderDecBar() {
   sEl.textContent = sealed === null ? '' : '⚜ Decrees sealed this week: ' + sealed;
   sEl.style.display = sealed === null ? 'none' : 'block';
 }
+function renderSupplyBar() {
+  const bar = $('#supply-bar'); if (!bar) return;
+  const u = lastStatus && lastStatus.usage;
+  const used = u && Number.isFinite(u.weekly_limit_used_pct) ? u.weekly_limit_used_pct : null;
+  if (used === null) { bar.classList.remove('show'); return; }
+  bar.classList.add('show');
+  $('#supply-used').textContent = 'Weekly supplies used: ' + fmtPct(used);
+  const reset = u && u.resets ? String(u.resets) : '';
+  $('#supply-reset').textContent = reset ? 'Resets ' + reset : '';
+}
 function renderHud() {
   const list = $('#list');
   if (!lastStatus) { return; }
@@ -1536,21 +1638,31 @@ function renderHud() {
     const st = inMeet ? STATE_INFO.meeting : (STATE_INFO[c.state] || { label: c.state || 'unknown', color: '#94a3b8' });
     const color = '#' + new THREE.Color(c.color || '#888').getHexString();
     const withName = c.with && (c.state === 'collaborating' || c.state === 'meeting' || inMeet);
-    return `<div class="bot${(() => { const d = decCount(c); return d.slug && d.n > 0 ? ' clickable' : ''; })()}"><div class="dot" style="background:${color}"></div>
+    const d = decCount(c);
+    return `<div class="bot${d.slug && d.n > 0 ? ' clickable' : ''}"><div class="dot" style="background:${color}"></div>
       <div class="name">${esc(c.name)}<small>${esc(c.role)}</small></div>
       <div class="badge" style="background:${st.color}">${esc(st.label)}</div>
       <div class="task">${esc(c.task) || '<span style="color:#4A3473">No task reported</span>'}${withName ? ` <b>→ ${esc(c.with)}</b>` : ''}</div>
       ${c.message ? `<div class="msg">“${esc(c.message)}”</div>` : ''}
-      ${(() => { const d = decCount(c); return d.slug && d.n > 0 ? `<div class="decs"><span>⚜ ${decWord(d.n)}</span><button type="button" class="dec-link" data-dispatch="${esc(d.slug)}">Review &amp; respond</button></div>` : ''; })()}</div>`;
+      ${rationsRow(usageOf(c.name, d.slug))}
+      ${d.slug && d.n > 0 ? `<div class="decs"><span>⚜ ${decWord(d.n)}</span><button type="button" class="dec-link" data-dispatch="${esc(d.slug)}">Review &amp; respond</button></div>` : ''}</div>`;
   }).join('');
   const by = (lastStatus.decisions && lastStatus.decisions.by_bot) || {};
   const extras = Object.keys(EXTRA_BOTS).filter((k) => Number.isFinite(by[k]) && by[k] > 0);
   if (extras.length) {
     list.innerHTML += '<div class="sec-title">Also waiting on you</div>' + extras.map((k) => `<div class="bot extra"><div class="dot" style="background:#94a3b8"></div>
       <div class="name">${esc(EXTRA_BOTS[k][0])}<small>${esc(EXTRA_BOTS[k][1])}</small></div><div></div>
+      ${rationsRow(usageOf(EXTRA_BOTS[k][0], k))}
       <div class="decs"><span>⚜ ${decWord(Math.floor(by[k]))}</span><button type="button" class="dec-link" data-dispatch="${esc(k)}">Review &amp; respond</button></div></div>`).join('');
   }
+  const rest = Object.keys(EXTRA_BOTS).filter((k) => !extras.includes(k) && Number.isFinite(usageOf(EXTRA_BOTS[k][0], k)));
+  if (rest.length) {
+    list.innerHTML += '<div class="sec-title">Company rations</div>' + rest.map((k) => `<div class="bot extra"><div class="dot" style="background:#94a3b8"></div>
+      <div class="name">${esc(EXTRA_BOTS[k][0])}<small>${esc(EXTRA_BOTS[k][1])}</small></div><div></div>
+      ${rationsRow(usageOf(EXTRA_BOTS[k][0], k))}</div>`).join('');
+  }
   renderDecBar();
+  renderSupplyBar();
   renderFoot();
 }
 function renderFoot() {
@@ -1585,6 +1697,12 @@ function openDispatch(slug) {
   const info = SLUG_INFO[slug] || [slug, ''];
   $('#dp-from').textContent = info[0];
   $('#dp-role').textContent = info[1];
+  const pct = usageOf(info[0], slug);
+  const rEl = $('#dp-rations');
+  if (rEl) {
+    if (Number.isFinite(pct)) { rEl.hidden = false; rEl.textContent = "This week's rations: " + fmtPct(pct) + ' of company supplies'; }
+    else { rEl.hidden = true; rEl.textContent = ''; }
+  }
   $('#dp-speech').textContent = n === 1 ? 'Commander, I have a matter awaiting your seal.' : `Commander, I have ${n} matters awaiting your seal.`;
   $('#dp-sub').textContent = n === 1 ? 'The campaign cannot move until you give the word.' : 'The campaign cannot move until you give the word on each.';
   const url = decUrl(slug);

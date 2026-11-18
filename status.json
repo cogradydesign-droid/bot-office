@@ -1,55 +1,60 @@
 {
-  "updated": "2026-11-15T15:00:52Z",
+  "updated": "2026-11-18T16:42:24Z",
   "bots": [
     {
       "name": "Malcedor",
       "role": "Chief of staff",
       "color": "#3B82F6",
       "state": "working",
-      "task": "Website fixes and getting the Bot Office live",
+      "task": "Running the decision board and departments",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 21
     },
     {
       "name": "Marketing Manager",
       "role": "Marketing strategy",
       "color": "#F59E0B",
       "state": "working",
-      "task": "Reworking week one around conversion",
+      "task": "Leading the marketing department",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 15
     },
     {
       "name": "Content Creator",
       "role": "Content creation",
       "color": "#14B8A6",
-      "state": "awaiting_approval",
-      "task": "Website copy fixes, waiting for Chris",
+      "state": "idle",
+      "task": "No task reported",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 5
     },
     {
       "name": "Branding Director",
       "role": "Brand & identity",
       "color": "#8B5CF6",
       "state": "awaiting_approval",
-      "task": "Homepage copy and logo, waiting for Chris",
+      "task": "Decisions waiting on GitHub",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 1,
+      "usage_pct": 11
     },
     {
       "name": "Narrative Campaign Event Organiser",
       "role": "Campaign events",
       "color": "#EF4444",
-      "state": "awaiting_approval",
-      "task": "The Last Low Tide concept, waiting for Chris",
+      "state": "idle",
+      "task": "No task reported",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 3
     },
     {
       "name": "Programme Manager",
@@ -59,32 +64,61 @@
       "task": "Tracking the launch schedule",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 8
     },
     {
       "name": "Social Media Expert",
       "role": "Social media",
       "color": "#EC4899",
-      "state": "awaiting_approval",
-      "task": "4-week posting calendar, waiting for Chris",
+      "state": "idle",
+      "task": "No task reported",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 13
     },
     {
       "name": "Market Researcher",
       "role": "Market research",
       "color": "#6366F1",
       "state": "idle",
-      "task": "",
+      "task": "No task reported",
       "message": "",
       "with": "",
-      "decisions": 0
+      "decisions": 0,
+      "usage_pct": 5
     }
   ],
   "decisions": {
-    "total": 0,
-    "by_bot": {},
-    "sealed_week": 0
+    "total": 8,
+    "by_bot": {
+      "finance": 1,
+      "lead-developer": 3,
+      "copywriter": 4,
+      "branding-director": 1
+    },
+    "sealed_week": 2
+  },
+  "usage": {
+    "by_bot": {
+      "Malcedor": 21,
+      "Marketing Manager": 15,
+      "Social Media Expert": 13,
+      "Branding Director": 11,
+      "Programme Manager": 8,
+      "Copywriter": 6,
+      "Lead Developer": 5,
+      "Market Researcher": 5,
+      "Content Creator": 5,
+      "Narrative Campaign Event Organiser": 3,
+      "Finance": 2,
+      "Product Strategist": 2,
+      "Design Lead": 1,
+      "UX Designer": 0
+    },
+    "period": "this week",
+    "weekly_limit_used_pct": 1.8,
+    "resets": "Fri 20 Nov 22:37 UK"
   }
 }
