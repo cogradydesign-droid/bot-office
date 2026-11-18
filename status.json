@@ -8,7 +8,8 @@
       "state": "working",
       "task": "Website fixes and getting the Bot Office live",
       "message": "",
-      "with": ""
+      "with": "",
+      "decisions": 0
     },
     {
       "name": "Marketing Manager",
@@ -17,7 +18,8 @@
       "state": "working",
       "task": "Reworking week one around conversion",
       "message": "",
-      "with": ""
+      "with": "",
+      "decisions": 0
     },
     {
       "name": "Content Creator",
@@ -26,7 +28,8 @@
       "state": "awaiting_approval",
       "task": "Website copy fixes, waiting for Chris",
       "message": "",
-      "with": ""
+      "with": "",
+      "decisions": 0
     },
     {
       "name": "Branding Director",
@@ -35,7 +38,8 @@
       "state": "awaiting_approval",
       "task": "Homepage copy and logo, waiting for Chris",
       "message": "",
-      "with": ""
+      "with": "",
+      "decisions": 0
     },
     {
       "name": "Narrative Campaign Event Organiser",
@@ -44,7 +48,8 @@
       "state": "awaiting_approval",
       "task": "The Last Low Tide concept, waiting for Chris",
       "message": "",
-      "with": ""
+      "with": "",
+      "decisions": 0
     },
     {
       "name": "Programme Manager",
@@ -53,7 +58,8 @@
       "state": "working",
       "task": "Tracking the launch schedule",
       "message": "",
-      "with": ""
+      "with": "",
+      "decisions": 0
     },
     {
       "name": "Social Media Expert",
@@ -62,7 +68,8 @@
       "state": "awaiting_approval",
       "task": "4-week posting calendar, waiting for Chris",
       "message": "",
-      "with": ""
+      "with": "",
+      "decisions": 0
     },
     {
       "name": "Market Researcher",
@@ -71,7 +78,13 @@
       "state": "idle",
       "task": "",
       "message": "",
-      "with": ""
+      "with": "",
+      "decisions": 0
     }
-  ]
+  ],
+  "decisions": {
+    "total": 0,
+    "by_bot": {},
+    "sealed_week": 0
+  }
 }
